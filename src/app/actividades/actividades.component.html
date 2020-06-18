@@ -1,0 +1,57 @@
+<table class="grid-actividades table-striped">
+  <thead>
+  <tr>
+      <th >Proyecto</th>
+      <th >Concepto</th>
+      <th *ngFor="let dia of diaMes" >{{ dia }}</th>
+  </tr>
+  </thead>
+  <tbody>
+      <tr  *ngFor="let actividad of actividades; index as i">
+          <td >
+            <mat-form-field class="anchoSelec">
+              <mat-select class="zindexAlto" [(ngModel)]="actividad.proyecto" name="proyecto">
+                <mat-option  *ngFor="let proyecto of proyectos; index as p"
+                  [value]="proyecto" >
+                  {{ proyecto }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td >
+            <mat-form-field class="anchoSelec">
+              <mat-select class="zindexAlto" [(ngModel)]="actividad.concepto" name="concepto">
+                <mat-option  *ngFor="let concepto of conceptos; index as c"
+                  [value]="concepto" >
+                  {{ concepto }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td  *ngFor="let hora of actividad.horas ; let h = index ; trackBy:trackByFn">
+          <input type="number" step="1" (input)="calcularTotales()" matInput size="2" maxlength="2" placeholder="0" min="0" max="24" [(ngModel)]="actividad.horas[h]"
+              class="margin-dcho-small">
+          </td>
+          <td class="anchoColBtn centrado">
+            <span (click)="borrar(i)" >X</span>
+          </td>
+        </tr>
+        <tr >
+          <td></td>
+          <td class="derecha">Total</td>
+          <td  *ngFor="let total of totales">
+            {{ total }}
+          </td>
+          <td> {{ total }}</td>
+        </tr>
+  </tbody>
+</table>
+
+<section>
+   <div class="example-button-row">
+    <button mat-button (click)="annadir()" >Añadir</button>
+    <button mat-button (click)="guardar()" color="primary">Guardar</button>
+    <button mat-button (click)="enviar()" color="primary">Enviar</button>
+    <button mat-button (click)="cancelar()" color="primary">Cancelar</button>
+   </div>
+</section>
