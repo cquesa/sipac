@@ -15,6 +15,7 @@ import { GastosComponent } from './gastos/gastos.component';
 import { VacacionesComponent } from './vacaciones/vacaciones.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { SelecMesComponent } from './selec-mes/selec-mes.component';
+import { CalgastosNgxComponent } from './gastos/calgastos_ngx/calgastos-ngx.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +24,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   imports:      [ 
@@ -30,14 +35,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     BrowserAnimationsModule,
     AppRoutingModule, 
     FormsModule, 
+    NgbModule,
+    BsDatepickerModule,
     MatButtonModule,
     MatSelectModule,
     MatInputModule,
     MatDialogModule,
     MatExpansionModule,
     MatTableModule,
-    MatPaginatorModule ],
-  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, GastosComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent ],
+    MatPaginatorModule,
+    MatIconModule,
+    BsDatepickerModule.forRoot() ],
+  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, GastosComponent, CalgastosNgxComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

@@ -27,7 +27,9 @@
 .derecha {
     text-align: right;
 }
-
+.margen-derecho {
+    margin-right: 5rem;
+}
 
 
 /* Remove Arrows/Spinners */
@@ -41,3 +43,18 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+  
+.btn-izquierda {
+    position: absolute;
+    left: 2rem;
+    height: 3rem;
+    line-height: 3rem;
+  }
+  .btn-derecha {
+    position: absolute;
+    right: 8rem;
+    height: 3rem;
+    line-height: 3rem;
+  }

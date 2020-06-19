@@ -1,1 +1,71 @@
-<p>vacaciones works!</p>
+<table class="grid-vacaciones table-striped">
+    <thead>
+    <tr>
+        <th ></th>
+        <th *ngFor="let dia of diaMes" >{{ dia }}</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let vacacion of vacaciones; index as i">
+            <td >
+                {{ vacacion.mes  }}
+            </td>
+            <td  *ngFor="let dia of vacacion.dias ; let h = index ; trackBy:trackByFn">
+                <input type="checkbox" (change)="calcularTotales()"  [(ngModel)]="vacacion.dias[h]"
+                class="margin-dcho-small">  
+                <!-- 
+            <mat-checkbox (change)="calcularTotales()" [(ngModel)]="vacacion.dias[h]"
+                class="margin-dcho-small"> </mat-checkbox>
+                -->
+            </td>
+            <td class="anchoColBtn centrado">
+                {{ vacacion.total }}               
+            </td>
+          </tr>
+     </tbody>
+  </table>
+  
+  <!--
+  <section>
+     <div class="example-button-row">
+      <button mat-button (click)="guardar()" color="primary">Guardar</button>
+      <button mat-button (click)="enviar()" color="primary">Enviar</button>
+      <button mat-button (click)="cancelar()" color="primary">Cancelar</button>
+     </div>
+  </section>
+-->
+
+<div class="btn-izquierda">
+  <span class="container" style="color:black ;background-color: darkgrey;">Borrador</span>
+  &nbsp;
+  <span class="container" style="color:black ;background-color: lightslategrey;">Enviado</span>
+  &nbsp;
+  <span class="container" style="color:black ;background-color: rgba(0, 255, 0, 0.575);">Visado</span>
+  &nbsp;
+  <span class="container" style="color:black ;background-color: rgb(218, 68, 68);">Rechazado</span>
+
+</div>
+<div class="btn-derecha">
+ 
+  <button mat-stroked-button color="primary">
+    <mat-icon>save</mat-icon>Guardar
+  </button>
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary">
+    <mat-icon>send</mat-icon>Enviar			
+  </button>
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary">
+    <mat-icon>cancel</mat-icon>Cancelar
+  </button>
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary">
+    <mat-icon>print</mat-icon>Imprimir
+  </button>	
+</div>
+
+
+<br/><br/><br/>

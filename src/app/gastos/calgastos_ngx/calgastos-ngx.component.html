@@ -1,0 +1,16 @@
+
+<div class="row">
+  <div>
+    <input type="text"
+           placeholder="Desde Hasta"
+           class="form-control theme-blue"
+           #drp="bsDaterangepicker" bsDaterangepicker [(bsValue)]="bsRangeValue"
+           
+           [bsConfig]="bsConfig">
+  </div>
+  <div>
+    <button class="btn" (click)="drp.toggle()" [attr.aria-expanded]="drp.isOpen" type="button">
+      <mat-icon>date_range</mat-icon>
+    </button>
+  </div>  
+</div>

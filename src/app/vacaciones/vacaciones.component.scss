@@ -1,0 +1,59 @@
+.grid-vacaciones {
+    margin: 2rem;
+    width: 90%;
+    .anchoSelec {
+        width: 5rem;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    td {
+        height: 0.5rem !important;
+        padding: 0;
+        input {
+            margin: 0 !important;
+        }
+        &.anchoColBtn {
+            width: 1.5rem;
+        }
+    }
+}
+
+.centrado {
+    text-align: center;
+}
+.derecha {
+    text-align: right;
+}
+.margen-derecho {
+    margin-right: 5rem;
+}
+
+
+/* Remove Arrows/Spinners */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.btn-izquierda {
+    position: absolute;
+    left: 2rem;
+    height: 3rem;
+    line-height: 3rem;
+  }
+  .btn-derecha {
+    position: absolute;
+    right: 8rem;
+    height: 3rem;
+    line-height: 3rem;
+  }
