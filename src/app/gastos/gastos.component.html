@@ -10,7 +10,7 @@
 		 	</tr>
 		</thead>
 	  	<tbody>
-			<tr *ngFor="let gasto of listaGastos()">
+			<tr *ngFor="let gasto of listaGastos(); index as i">
 				<td>
 					<div>
 						<select class="custom-select" [(ngModel)]="gasto.dsProyecto">
@@ -24,12 +24,13 @@
 					</div>
 				</td>
 				<td>
-				<app-calgastos-ngx></app-calgastos-ngx>
+					<!-- {{gasto.fcDesde | date | date: 'MM/dd/yyyy' }} -->
+				<app-calgastos-ngx [fcDesde]=gasto.fcDesde [fcHasta]=gasto.fcHasta></app-calgastos-ngx>
 				</td>
 				<td>			
 					<div>
 						<select class="custom-select" [(ngModel)]="gasto.dsTipoGasto">
-							<option value="Lista">Lista de Tipos - Obtener del backend</option>
+							<option value="">Lista de Tipos - Obtener del backend</option>
 							<!-- Aquí irá un *ngFor con la lista de Tipos -->
 							<option value="Transporte">Transporte</option>
 							<option value="Comida">Comida</option>
@@ -56,12 +57,12 @@
 				</td>
 				<td>
 					<div>
-					<button mat-mini-fab color="warn">
+					<button mat-mini-fab color="warn" (click)="borrar(i)">
 					<mat-icon>delete</mat-icon>
 					</button>
-					<!--
-						<button type="button" class="btn btn-outline-dark">Borrar</button>
-					-->
+
+						<!--<button type="button" class="btn btn-outline-dark" (click)="borrar(i)">Borrar</button>-->
+	
 					</div>				
 				</td>
 			</tr>	
@@ -71,42 +72,41 @@
 </div>
 
 <div class="btn-izquierda">
-	<span class="container" style="color:black ;background-color: darkgrey;">Borrador</span>
-	&nbsp;
-	<span class="container" style="color:black ;background-color: lightslategrey;">Enviado</span>
-	&nbsp;
-	<span class="container" style="color:black ;background-color: rgba(0, 255, 0, 0.575);">Visado</span>
-	&nbsp;
-	<span class="container" style="color:black ;background-color: rgb(218, 68, 68);">Rechazado</span>
-	&nbsp;
-	&nbsp;
+		<span class="container" style="color:black ;background-color: darkgrey;">Borrador</span>
+		&nbsp;
+		<span class="container" style="color:black ;background-color: lightslategrey;">Enviado</span>
+		&nbsp;
+		<span class="container" style="color:black ;background-color: rgba(0, 255, 0, 0.575);">Visado</span>
+		&nbsp;
+		<span class="container" style="color:black ;background-color: rgb(218, 68, 68);">Rechazado</span>
+		&nbsp;
+		&nbsp;
 </div>
 <div class="btn-derecha">
-	<button mat-stroked-button color="primary">
-		<mat-icon>edit</mat-icon>Añadir			
-	</button>
-	&nbsp;
-	&nbsp;
-	<button mat-stroked-button color="primary">
-		<mat-icon>save</mat-icon>Guardar
-	</button>
-	&nbsp;
-	&nbsp;
-	<button mat-stroked-button color="primary">
-		<mat-icon>send</mat-icon>Enviar			
-	</button>
-	&nbsp;
-	&nbsp;
-	<button mat-stroked-button color="primary">
-		<mat-icon>cancel</mat-icon>Cancelar
-	</button>
-	&nbsp;
-	&nbsp;
-	<button mat-stroked-button color="primary">
-		<mat-icon>print</mat-icon>Imprimir
-	</button>	
-</div>
+		<button mat-stroked-button color="primary" (click)="annadir()">
+			<mat-icon>edit</mat-icon>Añadir			
+		</button>
+		&nbsp;
+		&nbsp;
+		<button mat-stroked-button color="primary" (click)="guardar()">
+			<mat-icon>save</mat-icon>Guardar
+		</button>
+		&nbsp;
+		&nbsp;
+		<button mat-stroked-button color="primary" (click)="enviar()">
+			<mat-icon>send</mat-icon>Enviar
+		</button>
+		&nbsp;
+		&nbsp;
+		<button mat-stroked-button color="primary" (click)="cancelar()">
+			<mat-icon>cancel</mat-icon>Cancelar
+		</button>
+		&nbsp;
+		&nbsp;
+		<button mat-stroked-button color="primary" (click)="imprimir()">
+			<mat-icon>print</mat-icon>Imprimir
+		</button>	
+	</div>
 
 <br/><br/><br/>
-
 

@@ -12,7 +12,7 @@ const GASTOS_EMPLEADO = [
     nmUnidades: 1,
     nmImporte: 100.00,
     nmTotal: 100.00,
-    dsDescripcion: '',
+    dsDescripcion: 'En un restaurante',
     idEstado: 0,
     dsEstado: 'Borrador'
   },
@@ -69,11 +69,10 @@ const GASTOS_EMPLEADO = [
 })
 export class GastosComponent implements OnInit {
   proyecto = '';
-  estado = 'Borrador';
+  estado:string = "Borrador";
   bsRangeValue: Date[];
 
   constructor() {
-    setTheme('bs3'); // or 'bs4'
   }
 
   ngOnInit(): void {
@@ -82,5 +81,43 @@ export class GastosComponent implements OnInit {
   listaGastos() {
     // Hacer llamada al backend para obtener listado de gastos empleado
     return GASTOS_EMPLEADO;
+  }
+
+  annadir() {
+    let gasto;
+    
+    gasto = {
+      idProyecto: '',
+      dsProyecto: '',
+      fcDesde: '',
+      fcHasta: '',
+      idTipoGasto: '',
+      dsTipoGasto: '',
+      nmUnidades: '0',
+      nmImporte: '0',
+      nmTotal: '0',
+      dsDescripcion: '',
+      idEstado: '',
+      dsEstado: 'Borrador'
+    }
+
+    GASTOS_EMPLEADO.push(gasto); 
+  }
+
+  borrar(i) {
+    GASTOS_EMPLEADO.splice(i, 1);
+  }
+
+  guardar() {
+  }
+
+  enviar() {
+  }
+
+  cancelar() {
+  }
+
+  imprimir() {
+
   }
 }

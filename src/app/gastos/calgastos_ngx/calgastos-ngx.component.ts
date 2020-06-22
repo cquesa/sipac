@@ -1,43 +1,48 @@
-import {Component, OnInit, Input } from '@angular/core';
-import { BsLocaleService, BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
-import { listLocales } from 'ngx-bootstrap/chronos';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { esLocale } from 'ngx-bootstrap/locale';
 
 @Component({
     selector: 'app-calgastos-ngx',
     templateUrl: './calgastos-ngx.component.html',
     styleUrls: ['./calgastos-ngx.component.scss']
 })
-export class CalgastosNgxComponent implements OnInit  {
+export class CalgastosNgxComponent implements OnInit {
 
-  bsValue = new Date();
   bsRangeValue: Date[];
-  maxDate = new Date();
-  locale = 'bg';
-  locales = listLocales();
-
-  @Input() fcDesde:string;
-  @Input() fcHasta:string;
+  minDate = new Date('06/01/2020');
+  maxDate = new Date('06/30/2020');
   bsConfig: Partial<BsDaterangepickerConfig>;
+
+  @Input() fcDesde: string = "";
+  @Input() fcHasta: string = "";
+  
   constructor(
     private localeService: BsLocaleService) {
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
-    this.bsRangeValue = [this.bsValue, this.maxDate];
-    this.locales;
+
+    defineLocale('es', esLocale);
+    this.localeService.use('es');
+
   }
 
-    ngOnInit() {
-      //this.localeService.use(this.locale);
+  ngOnInit() {
+    this.bsConfig = Object.assign({}, 
+      { isAnimated: true },
+      { adaptivePosition: true },
+      { containerClass: 'theme-default' },
+      { showWeekNumbers: false },
+      { minDate: this.minDate},
+      { maxDate: this.maxDate},
+      { rangeInputFormat: 'DD/MM/YYYY' }
+    );                                       
 
-      this.bsConfig = Object.assign({}, { isAnimated: true }, 
-                                        { adaptivePosition: true }, 
-                                        { containerClass: 'theme-default' },
-                                        { dateInputFormat: 'YYYY-MM-DD' }
-                                        );
+    //fecha = fecha.split('-').reverse().join('/');
+    this.fcDesde = this.fcDesde.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/g,'$2/$1/$3');
+    this.fcHasta = this.fcHasta.replace(/^(\d{2})\/(\d{2})\/(\d{4})$/g,'$2/$1/$3');
+    
+    this.bsRangeValue = [new Date(this.fcDesde), new Date(this.fcHasta)];
+
   }
 
-  applyLocale(pop: any) {
-    this.localeService.use(this.locale);
-    pop.hide();
-    pop.show();
-  }
 }
