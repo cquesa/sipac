@@ -15,22 +15,27 @@
         <li class="nav-item active">
           <a class="nav-link" routerLink="home">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="actividades">Actividades</a>
+        <li class="nav-item" *ngIf="router.url == '/home'">
+          <a class="nav-link" routerLink="partes">Partes</a>
+        </li>        
+        <li class="nav-item" *ngIf="router.url == '/partes'">
+          <a class="nav-link" routerLink="partes/actividades">Actividades</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " routerLink="gastos" >Gastos</a>
+        <li class="nav-item" *ngIf="router.url == '/partes'">
+          <a class="nav-link " routerLink="partes/gastos" >Gastos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " routerLink="vacaciones" >Solicitud de vacaciones</a>
+        <li class="nav-item" *ngIf="router.url == '/partes'">
+          <a class="nav-link " routerLink="partes/vacaciones" >Solicitud de vacaciones</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="router.url == '/home'">
           <a class="nav-link " routerLink="empleados" >Empleados</a>
         </li>        
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <li class="nav-item" *ngIf="router.url == '/empleados'">
+          <a class="nav-link " routerLink="empleados/partesActividades" >Partes de actividades</a>
         </li>
-      </ul>
+        <li class="nav-item" *ngIf="router.url == '/empleados'">
+          <a class="nav-link " routerLink="empleados/solicitudVacaciones" >Solicitud de vacaciones</a>
+        </li>     </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -38,3 +43,8 @@
     </div>
   </nav>
   
+  <!-- debug ruta
+  router.url es {{
+    router.url
+  }}
+  -->

@@ -25,9 +25,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card'; 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PartesComponent } from './partes/partes.component';
+import { PartesActividadesComponent } from './partes-actividades/partes-actividades.component';
 
 @NgModule({
   imports:      [ 
@@ -45,8 +49,10 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatCardModule,
     BsDatepickerModule.forRoot() ],
-  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, GastosComponent, CalgastosNgxComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent ],
+  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, GastosComponent, CalgastosNgxComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent, PartesComponent, PartesActividadesComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

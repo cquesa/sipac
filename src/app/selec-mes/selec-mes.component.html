@@ -1,1 +1,24 @@
-<p>selec-mes works!</p>
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Parte de Actividades Mensual</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+        <mat-form-field class="literal">
+            <label>
+              <input matInput type="text" value="{{nombre | uppercase}}" placeholder="Nombre y apellido" disabled>
+            </label>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="seccionSelect">
+        <mat-select placeholder="Mes/Año:" [(ngModel)]="seleccionada" name="mes" (selectionChange)="optSeleccion()">
+            <mat-option *ngFor="let pe of periodos" [value]="pe.valor">
+            {{pe.muestraValor}}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+        </p>
+      </mat-card-content>
+  </mat-card>
+  
