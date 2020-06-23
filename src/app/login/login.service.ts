@@ -10,7 +10,8 @@ export class LoginService {
 
   
   isAuth() {
-    return localStorage.getItem("auth") != null;
+    return localStorage.getItem("auth") != null
+      && localStorage.getItem("auth").localeCompare("null") != 0;
   }
 
   signin(email: string, password: string) {
