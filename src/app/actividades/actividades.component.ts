@@ -99,4 +99,8 @@ export class ActividadesComponent implements OnInit {
        }
     }
   }
+
+  seleccionPeriodo(evt) {
+    console.log('TO DO seleccionPeriodo', evt);
+  }    
 }

@@ -136,4 +136,9 @@ export class GastosComponent implements OnInit {
   imprimir() {
 
   }
+
+  seleccionPeriodo(evt) {
+    console.log('TO DO seleccionPeriodo', evt);
+  }
+  
 }

@@ -1,4 +1,5 @@
-<app-selec-mes [titulo]="'Parte de Actividades Mensual'" [empleado]="empleado" [periodo]="periodo"></app-selec-mes>
+<app-selec-mes [titulo]="'Parte de Actividades Mensual'" [empleado]="empleado" [periodo]="periodo"
+    (periodoEvent)="seleccionPeriodo($event)"></app-selec-mes>
 
 <table class="grid-actividades table-striped">
   <thead>

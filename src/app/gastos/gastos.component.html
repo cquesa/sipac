@@ -1,4 +1,5 @@
-<app-selec-mes [titulo]="'Parte de Gastos Mensual'" [empleado]="empleado" [periodo]="periodo"></app-selec-mes>
+<app-selec-mes [titulo]="'Parte de Gastos Mensual'" [empleado]="empleado" [periodo]="periodo"
+	(periodoEvent)="seleccionPeriodo($event)"></app-selec-mes>
 
 <div class="contenedorTabla">
 	<table class="table table-striped">
