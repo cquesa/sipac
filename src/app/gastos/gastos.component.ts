@@ -70,7 +70,7 @@ const GASTOS_EMPLEADO = [
 })
 export class GastosComponent implements OnInit {
   // Empleado y periodo
-  nombre: string;
+  empleado: string;
   periodo: number;
   
   proyecto = '';
@@ -86,7 +86,7 @@ export class GastosComponent implements OnInit {
         let empleado = parametros.get('empleado');
         let periodo = parametros.get('periodo');
         if (empleado) {
-          this.nombre = empleado;
+          this.empleado = empleado;
         }
         if (periodo) {
           this.periodo = parseInt(periodo);

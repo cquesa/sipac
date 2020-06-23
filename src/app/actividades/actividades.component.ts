@@ -9,7 +9,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class ActividadesComponent implements OnInit {
   // Empleado y periodo
-  nombre: string;
+  empleado: string;
   periodo: number;
 
   diaMes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
@@ -32,7 +32,7 @@ export class ActividadesComponent implements OnInit {
         let empleado = parametros.get('empleado');
         let periodo = parametros.get('periodo');
         if (empleado) {
-          this.nombre = empleado;
+          this.empleado = empleado;
         }
         if (periodo) {
           this.periodo = parseInt(periodo);
