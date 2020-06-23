@@ -39,6 +39,7 @@ import { PartesActividadesComponent } from './partes-actividades/partes-activida
     BrowserAnimationsModule,
     AppRoutingModule, 
     FormsModule, 
+    ReactiveFormsModule,
     NgbModule,
     BsDatepickerModule,
     MatButtonModule,

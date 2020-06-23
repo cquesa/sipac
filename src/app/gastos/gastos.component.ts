@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { setTheme } from 'ngx-bootstrap/utils';
+import { GastosInterface } from './model/gastosInterface';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-const GASTOS_EMPLEADO = [
+const GASTOS_EMPLEADO:GastosInterface[]  = [
   {
     idProyecto: 1,
     dsProyecto: 'CMMA',
@@ -20,7 +20,7 @@ const GASTOS_EMPLEADO = [
   {
     idProyecto: 5,
     dsProyecto: 'Interproyecto',
-    fcDesde: '01/02/2020',
+    fcDesde: '27/02/2020',
     fcHasta: '29/02/2020',
     idTipoGasto: 2,
     dsTipoGasto: 'Alojamiento',
@@ -34,7 +34,7 @@ const GASTOS_EMPLEADO = [
   {
     idProyecto: 1,
     dsProyecto: 'CMMA',
-    fcDesde: '01/03/2020',
+    fcDesde: '09/03/2020',
     fcHasta: '30/03/2020',
     idTipoGasto: 2,
     dsTipoGasto: 'Taxi',
@@ -48,7 +48,7 @@ const GASTOS_EMPLEADO = [
   {
     idProyecto: 1,
     dsProyecto: 'CMMA',
-    fcDesde: '01/03/2020',
+    fcDesde: '15/04/2020',
     fcHasta: '30/03/2020',
     idTipoGasto: 2,
     dsTipoGasto: 'Transporte',
@@ -71,11 +71,12 @@ const GASTOS_EMPLEADO = [
 export class GastosComponent implements OnInit {
   // Empleado y periodo
   empleado: string;
-  periodo: number;
+  periodo: number;	
   
   proyecto = '';
   estado:string = "Borrador";
-  bsRangeValue: Date[];
+  rangoFechas: Date[];
+  fechas: Date[];
 
   constructor(private activatedRoute: ActivatedRoute) {
   }
@@ -92,7 +93,7 @@ export class GastosComponent implements OnInit {
           this.periodo = parseInt(periodo);
         }      }
     );
-  }
+  }	
 
   listaGastos() {
     // Hacer llamada al backend para obtener listado de gastos empleado
@@ -125,6 +126,9 @@ export class GastosComponent implements OnInit {
   }
 
   guardar() {
+    this.fechas;
+    this.rangoFechas;
+    console.log(GASTOS_EMPLEADO);
   }
 
   enviar() {
@@ -137,8 +141,13 @@ export class GastosComponent implements OnInit {
 
   }
 
-  seleccionPeriodo(evt) {
-    console.log('TO DO seleccionPeriodo', evt);
-  }
-  
+onChange(index:number) {
+  let fechaString = this.rangoFechas[0];
+  GASTOS_EMPLEADO[index].fcDesde;
+}
+
+seleccionPeriodo(evt) {
+  console.log('TO DO seleccionPeriodo', evt);
+}
+
 }

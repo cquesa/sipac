@@ -3,9 +3,9 @@
 
 <div class="contenedorTabla">
 	<table class="table table-striped">
-	    <thead >	
+	    <thead >	estado
 			<tr>
-				<th scope="col">Proyecto</th><th scope="col">Desde - Hasta</th><th scope="col">Tipo</th>
+				<th scope="col">Proyecto</th><th scope="col">Desde - Hasta</th><th scope="col">Rango fechas</th><th scope="col">Tipo</th>
 		 		<th scope="col">Unidades</th><th scope="col">Importe</th><th scope="col">Total</th><th scope="col">Descripción</th>
 				<th scope="col">Estado</th>
 		 	</tr>
@@ -14,7 +14,7 @@
 			<tr *ngFor="let gasto of listaGastos(); index as i">
 				<td>
 					<div>
-						<select class="custom-select" [(ngModel)]="gasto.dsProyecto">
+						<select class="custom-select" [(ngModel)]="gasto.dsProyecto" (change)="guardar()">
 							<option value="">Lista de Proyectos - Obtener del backend</option>
 							<!-- Aquí irá un *ngFor con la lista de Proyectos -->
 							<option value="CMMA">CMMA</option>
@@ -22,15 +22,30 @@
 							<option value="Proyecto 2">Proyecto 2</option>
 							<option value="Interproyecto">Interproyecto</option>
 						</select>
+
+						<!--<mat-form-field>
+							<mat-select  class="seccionSelect" placeholder="Proyecto" name="proyecto" [(ngModel)]="gasto.dsProyecto">
+								<mat-option>Lista de Proyectos - Obtener del backend</mat-option>
+								<mat-option>CMMA</mat-option>
+								<mat-option>Proyecto 1</mat-option>
+								<mat-option>Proyecto 2</mat-option>
+								<mat-option>Interproyecto</mat-option>
+							</mat-select>
+						</mat-form-field>-->
 					</div>
 				</td>
 				<td>
-					<!-- {{gasto.fcDesde | date | date: 'MM/dd/yyyy' }} -->
-				<app-calgastos-ngx [fcDesde]=gasto.fcDesde [fcHasta]=gasto.fcHasta></app-calgastos-ngx>
+					<app-calgastos-ngx [fcDesde]=gasto.fcDesde [fcHasta]=gasto.fcHasta  
+									   (_fechas) = "rangoFechas = $event">
+					</app-calgastos-ngx>
+				</td>
+				<td *ngIf="rangoFechas != null">
+					<input (change)="onChange(i)" [(ngModel)]="rangoFechas">
+					<!--{{rangoFechas[0] | date:'dd/MM/yyyy'}} - {{rangoFechas[1] | date:'dd/MM/yyyy'}}-->
 				</td>
 				<td>			
 					<div>
-						<select class="custom-select" [(ngModel)]="gasto.dsTipoGasto">
+						<select class="custom-select" [(ngModel)]="gasto.dsTipoGasto" >
 							<option value="">Lista de Tipos - Obtener del backend</option>
 							<!-- Aquí irá un *ngFor con la lista de Tipos -->
 							<option value="Transporte">Transporte</option>
@@ -42,28 +57,25 @@
 					</div>
 				</td>
 				<td>
-					<input type="number" class="form-control campoNum" value= "{{gasto.nmUnidades}}"/>
+					<input (change)="guardar()" type="number" class="form-control campoNum" value= "{{gasto.nmUnidades}}"/>
 				</td>
 				<td>
-					<input type="number" class="form-control campoNum" value= "{{gasto.nmImporte}}"/>
+					<input (change)="guardar()" type="number" class="form-control campoNum" value= "{{gasto.nmImporte}}"/>
 				</td>
 				<td>
-					<input type="number" class="form-control campoNum" value= "{{gasto.nmTotal}}"/>
+					<input (change)="guardar()" type="number" class="form-control campoNum" value= "{{gasto.nmTotal}}"/>
 				</td>
 				<td>
-					<input type="text" class="form-control campoNum" value= "{{gasto.dsDescripcion}}"/>
+					<input (change)="guardar()" type="text" class="form-control campoNum" value= "{{gasto.dsDescripcion}}"/>
 				</td>
 				<td>
-					<label type="text">{{estado}}</label>
+					<label type="text">{{gasto.dsEstado}}</label>
 				</td>
 				<td>
 					<div>
-					<button mat-mini-fab color="warn" (click)="borrar(i)">
-					<mat-icon>delete</mat-icon>
-					</button>
-
-						<!--<button type="button" class="btn btn-outline-dark" (click)="borrar(i)">Borrar</button>-->
-	
+						<button mat-mini-fab color="warn" (click)="borrar(i)">
+							<mat-icon>delete</mat-icon>
+						</button>
 					</div>				
 				</td>
 			</tr>	
