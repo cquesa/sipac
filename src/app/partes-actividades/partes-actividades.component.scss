@@ -1,0 +1,24 @@
+
+.example-card {
+    max-width: 400px;
+    margin-left: 2rem;
+    box-shadow: none;;
+  }
+  
+  .example-header-image {
+    background-image: url('/assets/login_head.png');
+    background-size: cover;
+  }
+
+.btn-izquierda {
+    position: absolute;
+    left: 2rem;
+    height: 3rem;
+    line-height: 3rem;
+  }
+  .btn-derecha {
+    position: absolute;
+    right: 8rem;
+    height: 3rem;
+    line-height: 3rem;
+  }

@@ -19,7 +19,9 @@ const routes: Routes = [
   { path: 'partes', component: PartesComponent, canActivate: [AppGuard],
     children: [  
       { path: 'actividades', component: ActividadesComponent, canActivate: [AppGuard] },
+      { path: 'actividades/:empleado/:periodo', component: ActividadesComponent, canActivate: [AppGuard] },
       { path: 'gastos', component: GastosComponent, canActivate: [AppGuard] },
+      { path: 'gastos/:empleado/:periodo', component: GastosComponent, canActivate: [AppGuard] },
       { path: 'vacaciones', component: VacacionesComponent, canActivate: [AppGuard] },
   ]},
   { path: 'empleados', component: EmpleadosComponent, canActivate: [AppGuard] ,

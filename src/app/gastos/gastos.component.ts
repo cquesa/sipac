@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 const GASTOS_EMPLEADO = [
   {
@@ -68,14 +69,29 @@ const GASTOS_EMPLEADO = [
   styleUrls: ['./gastos.component.scss']
 })
 export class GastosComponent implements OnInit {
+  // Empleado y periodo
+  nombre: string;
+  periodo: number;
+  
   proyecto = '';
   estado:string = "Borrador";
   bsRangeValue: Date[];
 
-  constructor() {
+  constructor(private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(
+      (parametros: ParamMap) => {
+        let empleado = parametros.get('empleado');
+        let periodo = parametros.get('periodo');
+        if (empleado) {
+          this.nombre = empleado;
+        }
+        if (periodo) {
+          this.periodo = parseInt(periodo);
+        }      }
+    );
   }
 
   listaGastos() {

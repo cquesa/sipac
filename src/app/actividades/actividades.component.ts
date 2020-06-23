@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Actividad } from '../actividad';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-actividades',
@@ -7,6 +8,9 @@ import { Actividad } from '../actividad';
   styleUrls: ['./actividades.component.scss']
 })
 export class ActividadesComponent implements OnInit {
+  // Empleado y periodo
+  nombre: string;
+  periodo: number;
 
   diaMes = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
@@ -20,9 +24,21 @@ export class ActividadesComponent implements OnInit {
   proyectos: string[] = ["GO G2437", "GO G2421"];
   conceptos: string[] = ["Gestión Adm. Digital", "Vacaciones"];
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(
+      (parametros: ParamMap) => {
+        let empleado = parametros.get('empleado');
+        let periodo = parametros.get('periodo');
+        if (empleado) {
+          this.nombre = empleado;
+        }
+        if (periodo) {
+          this.periodo = parseInt(periodo);
+        }      }
+    );
+
     let actividad:  Actividad;
 
     actividad = new Actividad('GO G2437', 'Gestión Adm. Digital',

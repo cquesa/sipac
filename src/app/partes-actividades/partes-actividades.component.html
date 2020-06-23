@@ -1,1 +1,44 @@
-<p>partes-actividades works!</p>
+<form class="center-block" #authform="ngForm">
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Seguimiento de los empleados</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+        <mat-form-field class="literal">
+            <mat-select required placeholder="Empleado" [(ngModel)]="empleadoSel" name="empleado" (selectionChange)="seleccionEmpleado()">
+                <mat-option *ngFor="let pe of empleados" [value]="pe.valor">
+                {{pe.muestraValor}}
+                </mat-option>
+            </mat-select>
+                <label>
+              <input matInput type="text" value="{{nombre | uppercase}}" placeholder="Nombre y apellido" disabled>
+            </label>
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="seccionSelect">
+        <mat-select required placeholder="Mes/Año" [(ngModel)]="periodoSel" name="periodo" (selectionChange)="seleccionPeriodo()">
+            <mat-option *ngFor="let pe of periodos" [value]="pe.valor">
+            {{pe.muestraValor}}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+        </p>
+      </mat-card-content>
+  </mat-card>
+  </form>
+
+  <div class="btn-derecha">
+    <button mat-stroked-button color="primary" (click)="irActividades()"  [disabled]="!authform.form.valid">
+      <mat-icon>check</mat-icon>Consultar Actividades			
+    </button>
+    &nbsp;
+    &nbsp;
+    <button mat-stroked-button color="primary" (click)="irGastos()"  [disabled]="!authform.form.valid">
+      <mat-icon>check</mat-icon>Consultar Gastos
+    </button>
+  </div>
+  
+  <br/><br/><br/>

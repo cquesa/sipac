@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-partes-actividades',
@@ -7,9 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartesActividadesComponent implements OnInit {
 
-  constructor() { }
+  empleados = [
+    {valor: null, muestraValor: null},
+    {valor: 'cquesadag', muestraValor:'Carlos Quesada Galán'},
+    {valor: 'drodriguezu', muestraValor:'Domingo Rodríguez Urbita'},
+    {valor: 'jgarciab', muestraValor:'Jesus García Bermejo'}
+  ];
+
+  periodos = [
+    {valor: null, muestraValor: null},
+    {valor: 4, muestraValor:'abril - 2020'},
+    {valor: 5, muestraValor:'mayo - 2020'},
+    {valor: 6, muestraValor:'junio - 2020'},
+    {valor: 7, muestraValor:'julio - 2020'}
+  ];
+
+  @Input() nombre:string;
+  periodoSel:number = this.periodos[0].valor;
+  empleadoSel:string = this.empleados[0].valor;
+
+  @Output() empleadoEvent = new EventEmitter;
+  @Output() periodoEvent = new EventEmitter;
+
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  seleccionEmpleado(){
+    this.periodoEvent.emit(this.empleadoSel.toString());
+  }
+  
+  seleccionPeriodo(){
+    this.empleadoEvent.emit(this.periodoSel);
+  }
+
+  irActividades() {
+    this.router.navigateByUrl(
+      'partes/actividades/' + this.empleadoSel + '/' + this.periodoSel); 
+  }
+
+  irGastos() {
+    this.router.navigateByUrl(
+      'partes/gastos/' + this.empleadoSel + '/' + this.periodoSel); 
   }
 
 }
