@@ -33,7 +33,8 @@
           </td>
           <td  *ngFor="let hora of actividad.horas ; let h = index ; trackBy:trackByFn">
           <input type="number" step="1" (input)="calcularTotales()" matInput size="2" maxlength="2" placeholder="0" min="0" max="24" [(ngModel)]="actividad.horas[h]"
-              class="margin-dcho-small">
+              class="margin-dcho-small" (dblclick)="open(actividad, h)"
+              [ngStyle]="actividad.horas[h] > 0 ? {'color': 'blue'} : {}">
           </td>
           <td class="anchoColBtn centrado">
             <span (click)="borrar(i)" >X</span>
@@ -42,10 +43,10 @@
         <tr >
           <td></td>
           <td class="derecha">Total</td>
-          <td  *ngFor="let total of totales">
+          <td  *ngFor="let total of totales" class="rojo">
             {{ total }}
           </td>
-          <td> {{ total }}</td>
+          <td class="rojo"> {{ total }}</td>
         </tr>
   </tbody>
 </table>

@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 export class PartesActividadesComponent implements OnInit {
 
   empleados = [
-    {valor: null, muestraValor: null},
-    {valor: 'cquesadag', muestraValor:'Carlos Quesada Galán'},
-    {valor: 'drodriguezu', muestraValor:'Domingo Rodríguez Urbita'},
-    {valor: 'jgarciab', muestraValor:'Jesus García Bermejo'}
+    {valor: null, muestraValor: null, gerente: null},
+    {valor: 'cquesadag', muestraValor:'Carlos Quesada Galán', gerente: 'Juan Manuel Martinez Ortiz'},
+    {valor: 'drodriguezu', muestraValor:'Domingo Rodríguez Urbita', gerente: 'Juan Manuel Martinez Ortiz'},
+    {valor: 'jgarciab', muestraValor:'Jesus García Bermejo', gerente: 'Luis Eduardo Rebollo Bretaño'}
   ];
 
   periodos = [
@@ -36,11 +36,11 @@ export class PartesActividadesComponent implements OnInit {
   }
 
   seleccionEmpleado(){
-    this.periodoEvent.emit(this.empleadoSel.toString());
+    this.empleadoEvent.emit(this.empleadoSel.toString());
   }
   
   seleccionPeriodo(){
-    this.empleadoEvent.emit(this.periodoSel);
+    this.periodoEvent.emit(this.periodoSel);
   }
 
   irActividades() {

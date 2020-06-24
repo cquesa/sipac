@@ -38,7 +38,6 @@ export class SelecMesComponent implements OnInit {
           break;
         }
       }
-      this.periodoSel = this.periodo;
     }
     if (this.periodo) {
       this.periodoSel = this.periodo;

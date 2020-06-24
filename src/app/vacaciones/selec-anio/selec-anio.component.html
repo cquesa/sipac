@@ -1,0 +1,39 @@
+<mat-card class="empleado-anio-card">
+    <mat-card-header>
+      <div mat-card-avatar class="empleado-anio-image"></div>
+      <mat-card-title>{{ titulo }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div>
+        <mat-form-field class="literal" >
+            <label *ngIf="router.url == '/partes/vacaciones'">
+              <input matInput type="text" value="{{nombre | uppercase}}" placeholder="Nombre y apellido" disabled>
+            </label>
+            <mat-select required placeholder="Empleado" [(ngModel)]="empleadoSel" name="empleado" 
+              *ngIf="router.url == '/empleados/solicitudVacaciones'"
+                (selectionChange)="seleccionEmpleado()">
+              <mat-option *ngFor="let pe of empleados" [value]="pe.valor">
+              {{pe.muestraValor}}
+              </mat-option>
+          </mat-select>            
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="seccionSelect">
+        <mat-select placeholder="Año:" [(ngModel)]="anioSel" name="mes" (selectionChange)="seleccionAnio()">
+            <mat-option *ngFor="let pe of anios" [value]="pe.valor">
+            {{pe.muestraValor}}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="literal">
+            <label>
+              <input matInput type="text" value="{{gerente | uppercase}}" placeholder="Gerente" disabled>
+            </label>
+        </mat-form-field>
+        </div>
+      </mat-card-content>
+  </mat-card>
+  

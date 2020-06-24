@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Actividad } from '../actividad';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { NotaComponent } from './nota/nota.component';
 
 @Component({
   selector: 'app-actividades',
@@ -24,7 +26,7 @@ export class ActividadesComponent implements OnInit {
   proyectos: string[] = ["GO G2437", "GO G2421"];
   conceptos: string[] = ["Gestión Adm. Digital", "Vacaciones"];
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(
@@ -103,4 +105,20 @@ export class ActividadesComponent implements OnInit {
   seleccionPeriodo(evt) {
     console.log('TO DO seleccionPeriodo', evt);
   }    
+ 
+  open(actividad: Actividad, indice: number) {
+    const dialogRef = this.dialog.open(NotaComponent, {
+      width: '250px',
+      data: {actividad: actividad, indice: indice, 
+        dia: indice + "06/2020",
+      horas: actividad.horas[indice], observaciones: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed');
+      if (result) {
+        actividad.horas[indice] = result.horas;
+      }
+    });    
+  }  
 }

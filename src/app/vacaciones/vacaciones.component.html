@@ -1,5 +1,75 @@
-<app-selec-mes  [titulo]="'Parte de Vacaciones Anuales'"></app-selec-mes>
 
+
+
+<mat-grid-list   class="cabecera-grid-list"  cols="3" rowHeight="2.6:1">
+  <mat-grid-tile class="cabecera-grid-tile"> 
+    <app-selec-anio  [titulo]="'Parte de Vacaciones Anuales'"
+  (anioEvent)="seleccionAnio($event)"
+  (empleadoEvent)="seleccionEmpleado($event)"
+  ></app-selec-anio>
+  </mat-grid-tile>
+  <mat-grid-tile class="cabecera-grid-tile">
+
+    <mat-card class="empleado-vacaciones-card">
+    <mat-card-content>
+    <div>
+      <mat-form-field class="literal" >
+          <label>
+            <input matInput type="text" value="{{empleado.diasTotales}}" placeholder="Dias totales" disabled>
+          </label>
+      </mat-form-field>
+    </div>  
+    <div>
+      <mat-form-field class="literal" >
+          <label>
+            <input matInput type="text" value="{{empleado.diasPendientes}}" placeholder="Dias pendientes" disabled>
+          </label>
+      </mat-form-field>
+    </div>  
+    <div>
+      <mat-form-field class="literal" >
+          <label>
+            <input matInput type="text" value="{{empleado.dias2019}}" placeholder="Dias disgrutados de 2019" disabled>
+          </label>
+      </mat-form-field>
+    </div>  
+  </mat-card-content>
+</mat-card>
+
+  </mat-grid-tile>
+  <mat-grid-tile  class="cabecera-grid-tile">
+
+    <mat-card class="empleado-vacaciones-card">
+    <mat-card-content>
+    <div>
+      <mat-form-field class="literal" >
+          <label>
+            <input matInput type="text" value="{{empleado.diasTramite}}" placeholder="Dias en trámite" disabled>
+          </label>
+      </mat-form-field>
+    </div>  
+    <div>
+      <mat-form-field class="literal" >
+          <label>
+            <input matInput type="text" value="{{empleado.diasDisfrutados}}" placeholder="Dias disfrutados" disabled>
+          </label>
+      </mat-form-field>
+    </div>  
+    <div>
+      <mat-form-field class="literal" >
+          <label>
+            <input matInput type="text" value="{{empleado.dias2020}}" placeholder="Dias disgrutados de 2020" disabled>
+          </label>
+      </mat-form-field>
+    </div>  
+  </mat-card-content>
+</mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div style="clear: both"></div>
+  
 <table class="grid-vacaciones table-striped">
     <thead>
     <tr>
@@ -8,13 +78,14 @@
     </tr>
     </thead>
     <tbody>
-        <tr  *ngFor="let vacacion of vacaciones; index as i">
+        <tr  *ngFor="let vacacion of empleado.vacaciones; index as i">
             <td >
                 {{ vacacion.mes  }}
             </td>
-            <td  *ngFor="let dia of vacacion.dias ; let h = index ; trackBy:trackByFn">
+            <td  *ngFor="let dia of vacacion.dias ; let h = index ; trackBy:trackByFn"
+            [ngStyle]="vacacion.dias[h] ? {'background-color': 'cyan'} : {}">
                 <input type="checkbox" (change)="calcularTotales()"  [(ngModel)]="vacacion.dias[h]"
-                class="margin-dcho-small">  
+                class="margin-dcho-small" >  
                 <!-- 
             <mat-checkbox (change)="calcularTotales()" [(ngModel)]="vacacion.dias[h]"
                 class="margin-dcho-small"> </mat-checkbox>

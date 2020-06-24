@@ -1,0 +1,16 @@
+.empleado-anio-card {
+    max-width: 400px;
+    margin-left: 2rem;
+    box-shadow: none;;
+  
+  .empleado-anio-image {
+    background-image: url('/assets/login_head.png');
+    background-size: cover;
+  }
+}
+
+mat-form-field.mat-form-field {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: 12px;
+  }

@@ -4,7 +4,7 @@ export class Vacaciones {
 constructor(
     public mes: string,
     public dias: boolean[],
-    public total: number
+    public total: number,
     ) { }
             
 }

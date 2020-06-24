@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ActividadesComponent } from './actividades/actividades.component';
+import { NotaComponent } from './actividades/nota/nota.component';
 import { GastosComponent } from './gastos/gastos.component';
 import { VacacionesComponent } from './vacaciones/vacaciones.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
@@ -27,11 +28,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card'; 
+import {MatGridListModule} from '@angular/material/grid-list'; 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PartesComponent } from './partes/partes.component';
 import { PartesActividadesComponent } from './partes-actividades/partes-actividades.component';
+import { SelecAnioComponent } from './vacaciones/selec-anio/selec-anio.component';
 
 @NgModule({
   imports:      [ 
@@ -52,8 +55,9 @@ import { PartesActividadesComponent } from './partes-actividades/partes-activida
     MatIconModule,
     MatFormFieldModule,
     MatCardModule,
+    MatGridListModule,
     BsDatepickerModule.forRoot() ],
-  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, GastosComponent, CalgastosNgxComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent, PartesComponent, PartesActividadesComponent ],
+  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, NotaComponent, GastosComponent, CalgastosNgxComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent, PartesComponent, PartesActividadesComponent, SelecAnioComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
