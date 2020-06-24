@@ -18,11 +18,22 @@ export class LoginService {
     let login = {
       usuario: email, password: password
     };
+    // Validar email y password y obtener usuario
+    let usuario = {
+      empleado: 'cquesadag', nombre: 'Carlos Quesada Galán'
+    };
     localStorage.setItem("auth", JSON.stringify(login));
+    localStorage.setItem("usuario", JSON.stringify(usuario));
   }
 
   logout() {
     localStorage.setItem("auth", null);
+  }
+
+  getUsuario() {
+    let usuario = localStorage.getItem("usuario");
+    return usuario != null
+      && usuario.localeCompare("null") != 0 ? JSON.parse(usuario) : null ;
   }
 
 }
