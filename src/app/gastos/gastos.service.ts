@@ -1,38 +1,54 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GastosInterface } from './model/gastosInterface';
+import { LoginService } from '../login/login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GastosService {
 
+  usuario:any = {
+    empleado: '', nombre: ''
+  };
 
   urlGetAll = "";
   urlGetPut = "";
   urlPost = "";
-  urlGetDelete = "";
+  urlDelete = "";
+  urlEnviar = "";
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient,
+    private datosUser : LoginService) { }
 
-  getAll() {
+  getAll(periodo:number) {
     // Llamar url php Get
+    this.usuario = this.datosUser.getUsuario();
+    let elementos:GastosInterface[];
+    //return this.http.get(this.urlGetAll + '/' + this.usuario.empleado + '/' + periodo);
+    return elementos;
   }
 
-  onSave(gasto:JSON) {
+  guardarGastos(gastos:GastosInterface[]) {
     // Llamar url php Put
+    JSON.stringify(gastos);
+    //this.http.put(this.urlGetPut, JSON.stringify(gastos)).subscribe();
+    //localStorage.setItem("GASTOS_EMPLEADO", JSON.stringify(gastos));
   }
 
-  onUpdate(id:number) {
+  updateGasto(id:number) {
     // Llamar url php Post
+    //this.http.post(this.urlPost, id).subscribe();
   }
 
-  onDelete(id:number) {
+  borrarGasto(id:number) {
     // Llamar url php Delete
+    //this.http.post(this.urlDelete, id).subscribe();
   }
 
-  onEnviar(gastos:GastosInterface[]) {
+  enviarGastos(gastos:GastosInterface[]) {
     // Llamar url php Delete
+    //this.http.post(this.urlEnviar, gastos).subscribe();
   }
 
 

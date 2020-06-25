@@ -8,3 +8,7 @@
     background-image: url('/assets/login_head.png');
     background-size: cover;
   }
+
+  .mat-input-element:disabled {
+    color: black !important;
+  }

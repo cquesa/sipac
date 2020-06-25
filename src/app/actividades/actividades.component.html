@@ -3,14 +3,14 @@
 
 <table class="grid-actividades table-striped">
   <thead>
-  <tr>
+  <tr class="fondoAzul">
       <th >Proyecto</th>
       <th >Concepto</th>
       <th *ngFor="let dia of diaMes" >{{ dia }}</th>
   </tr>
   </thead>
   <tbody>
-      <tr  *ngFor="let actividad of actividades; index as i">
+      <tr  *ngFor="let actividad of parteActividad.actividades; index as i">
           <td >
             <mat-form-field class="anchoSelec">
               <mat-select class="zindexAlto" [(ngModel)]="actividad.proyecto" name="proyecto">
@@ -36,8 +36,14 @@
               class="margin-dcho-small" (dblclick)="open(actividad, h)"
               [ngStyle]="actividad.horas[h] > 0 ? {'color': 'blue'} : {}">
           </td>
-          <td class="anchoColBtn centrado">
-            <span (click)="borrar(i)" >X</span>
+          <td class="anchoColBtn centrado"
+                [ngClass]="{'borrador': parteActividad.estado == 'borrador', 
+                'enviado': parteActividad.estado == 'enviado', 
+                'visado': parteActividad.estado == 'visado', 
+                'rechazado': parteActividad.estado == 'rechazado', 
+                'disfrutado': parteActividad.estado == 'disfrutado'}" 
+                (click)="borrar(i)" >
+            <span>X</span>
           </td>
         </tr>
         <tr >
@@ -71,21 +77,31 @@
   <span class="container" style="color:black ;background-color: rgb(218, 68, 68);">Rechazado</span>
 </div>
 <div class="btn-derecha">
-  <button mat-stroked-button color="primary" (click)="annadir()">
+  <button mat-stroked-button color="primary" (click)="annadir()" *ngIf="router.url == '/partes/actividades'">
     <mat-icon>edit</mat-icon>Añadir			
   </button>
   &nbsp;
   &nbsp;
-  <button mat-stroked-button color="primary">
+  <button mat-stroked-button color="primary"  (click)="guardar()" *ngIf="router.url == '/partes/actividades'">
     <mat-icon>save</mat-icon>Guardar
   </button>
   &nbsp;
   &nbsp;
-  <button mat-stroked-button color="primary">
+  <button mat-stroked-button color="primary"  (click)="enviar()"  *ngIf="router.url == '/partes/actividades'">
     <mat-icon>send</mat-icon>Enviar			
   </button>
   &nbsp;
   &nbsp;
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary" (click)="aceptar()" *ngIf="revisionGerente">
+    <mat-icon>check</mat-icon>Aceptar
+  </button>
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary" (click)="rechazar()" *ngIf="revisionGerente">
+    <mat-icon>close</mat-icon>Rechazar			
+  </button>
   <button mat-stroked-button color="primary">
     <mat-icon>cancel</mat-icon>Cancelar
   </button>

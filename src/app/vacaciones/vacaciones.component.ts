@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Vacaciones } from '../vacaciones';
-import { Empleado } from '../empleado';
+import { Vacaciones, VacacionesMes, DiaVacaciones } from '../vacaciones';
+import { VacacionesService } from './vacaciones.service';
+import { LoginService } from '../login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vacaciones',
@@ -13,39 +15,19 @@ export class VacacionesComponent implements OnInit {
             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
 
-  empleado: Empleado = new Empleado();
+  empleado: Vacaciones = new Vacaciones();
+  anioSel: number;
+  empleadoSel: string;
 
-  constructor() { }
+  constructor(public router: Router, private loginService: LoginService,
+    private vacacionesService: VacacionesService) { }
 
   ngOnInit(): void {
-    this.empleado.diasTotales = 23;
-    this.empleado.diasPendientes = 23;
-    this.empleado.dias2019 = 2;
-    this.empleado.diasTramite = 15;
-    this.empleado.diasDisfrutados = 0;
-    this.empleado.dias2020 = 23;
-    this.empleado.vacaciones = [];
-
-    this.mesVacaciones("Enero");
-    this.mesVacaciones("Febrero");
-    this.mesVacaciones("Marzo");
-    this.mesVacaciones("Abril");
-    this.mesVacaciones("Mayo");
-    this.mesVacaciones("Junio");
-    this.mesVacaciones("Julio");
-    this.mesVacaciones("Agosto");
-    this.mesVacaciones("Septiembre");
-    this.mesVacaciones("Octubre");
-    this.mesVacaciones("Noviembre");
-    this.mesVacaciones("Diciembre");
-  }
-  mesVacaciones(mes: string) {
-    let vacacion = new Vacaciones(mes,
-    [false, false, false, false, false, false, false, false, false, false,
-      false, false, false, false, false, false, false, false, false, false,
-      false, false, false, false, false, false, false, false, false, false, false], 0
-    );
-    this.empleado.vacaciones.push(vacacion);
+    let d = new Date();
+    this.anioSel = d.getFullYear();
+    let usuario = this.loginService.getUsuario();
+    this.empleadoSel = usuario.empleado;
+    this.empleado = this.vacacionesService.getVacaciones(this.empleadoSel, this.anioSel);
   }
 
   trackByFn(index: any, item: any) {
@@ -54,9 +36,32 @@ export class VacacionesComponent implements OnInit {
 
   
   guardar() {
+    this.vacacionesService.guardarVacaciones(this.empleadoSel, this.anioSel, this.empleado);
+  }
+
+  fromTo(estadoFrom: string, esadoTO: string) {
+    for (let vacacion of this.empleado.vacaciones) {
+      vacacion.total = 0;
+      for (let dia of vacacion.dias) {
+        if (dia.check && dia.estado != null && dia.estado.localeCompare(estadoFrom) == 0) {
+          dia.estado = esadoTO;
+        }
+       }
+    }
+    this.vacacionesService.guardarVacaciones(this.empleadoSel, this.anioSel, this.empleado);
   }
 
   enviar() {
+    // Pasamos "borrador" a "enviado"
+    this.fromTo('borrador','enviado' );
+  }
+
+  aceptar() {
+    this.fromTo('enviado','visado' );
+  }
+
+  rechazar() {
+    this.fromTo('enviado','rechazado' );
   }
 
   cancelar() {
@@ -64,16 +69,30 @@ export class VacacionesComponent implements OnInit {
 
   seleccionAnio(evt) {
     console.log('TO DO seleccionAnio', evt);
+    this.anioSel = evt;
+    this.empleado = this.vacacionesService.getVacaciones(this.empleadoSel, this.anioSel);
   } 
   seleccionEmpleado(evt) {
     console.log('TO DO seleccionEmpleado', evt);
+    this.empleadoSel = evt;
+    this.empleado = this.vacacionesService.getVacaciones(this.empleadoSel, this.anioSel);
+  }
+
+  clickDia(mes: number, dia:number) {
+    let diaObj = this.empleado.vacaciones[mes].dias[dia];
+    if (diaObj.estado == null) {
+      diaObj.estado = 'borrador';
+    } else if (diaObj.estado.localeCompare('borrador') == 0) {
+      diaObj.estado = null;
+    }
+    this.calcularTotales();
   }
 
   calcularTotales() {
     for (let vacacion of this.empleado.vacaciones) {
       vacacion.total = 0;
       for (let dia of vacacion.dias) {
-        vacacion.total += dia ? 1 : 0;
+        vacacion.total += dia.check ? 1 : 0;
        }
     }
   }

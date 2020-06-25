@@ -10,6 +10,10 @@
         border-collapse: collapse;
         text-align: center;
     }
+    tr.fondoAzul {
+        color: white;
+        background-color: blue;
+    }
     td {
         height: 0.5rem !important;
         padding: 0;
@@ -19,6 +23,21 @@
         &.anchoColBtn {
             width: 1.5rem;
         }
+        &.borrador {
+            background-color: darkgrey;
+        }
+        &.enviado {
+            background-color: lightslategrey;
+        }
+        &.visado {
+            background-color: green;
+        }
+        &.rechazado {
+            background-color: red;
+        }        
+        &.disfrutado {
+            background-color: blue;
+        }        
     }
 }
 

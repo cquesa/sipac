@@ -27,7 +27,7 @@
         <li class="nav-item" *ngIf="router.url == '/partes'">
           <a class="nav-link " routerLink="partes/vacaciones" >Solicitud de vacaciones</a>
         </li>
-        <li class="nav-item" *ngIf="router.url == '/home'">
+        <li class="nav-item" *ngIf="router.url == '/home' && loginService.getPerfil() == 1">
           <a class="nav-link " routerLink="empleados" >Empleados</a>
         </li>        
         <li class="nav-item" *ngIf="router.url == '/empleados'">

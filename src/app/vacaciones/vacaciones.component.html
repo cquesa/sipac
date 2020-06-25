@@ -72,7 +72,7 @@
   
 <table class="grid-vacaciones table-striped">
     <thead>
-    <tr>
+    <tr class="fondoAzul">
         <th ></th>
         <th *ngFor="let dia of diaMes" >{{ dia }}</th>
     </tr>
@@ -83,9 +83,16 @@
                 {{ vacacion.mes  }}
             </td>
             <td  *ngFor="let dia of vacacion.dias ; let h = index ; trackBy:trackByFn"
-            [ngStyle]="vacacion.dias[h] ? {'background-color': 'cyan'} : {}">
-                <input type="checkbox" (change)="calcularTotales()"  [(ngModel)]="vacacion.dias[h]"
-                class="margin-dcho-small" >  
+              [ngClass]="{'borrador': vacacion.dias[h].estado == 'borrador', 
+                          'enviado': vacacion.dias[h].estado == 'enviado', 
+                          'visado': vacacion.dias[h].estado == 'visado', 
+                          'rechazado': vacacion.dias[h].estado == 'rechazado', 
+                          'disfrutado': vacacion.dias[h].estado == 'disfrutado'}">
+                <input type="checkbox" (change)="clickDia(i, h)"  [(ngModel)]="vacacion.dias[h].check"
+                class="margin-dcho-small" disabled="{{ vacacion.dias[h].estado == 'visado' 
+                                                     || vacacion.dias[h].estado == 'enviado' 
+                                                     || vacacion.dias[h].estado == 'disfrutado'  
+                                                     || router.url == '/empleados/solicitudVacaciones' }}" >  
                 <!-- 
             <mat-checkbox (change)="calcularTotales()" [(ngModel)]="vacacion.dias[h]"
                 class="margin-dcho-small"> </mat-checkbox>
@@ -120,13 +127,23 @@
 </div>
 <div class="btn-derecha">
  
-  <button mat-stroked-button color="primary">
+  <button mat-stroked-button color="primary" (click)="guardar()" *ngIf="router.url == '/partes/vacaciones'">
     <mat-icon>save</mat-icon>Guardar
   </button>
   &nbsp;
   &nbsp;
-  <button mat-stroked-button color="primary">
+  <button mat-stroked-button color="primary" (click)="enviar()" *ngIf="router.url == '/partes/vacaciones'">
     <mat-icon>send</mat-icon>Enviar			
+  </button>
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary" (click)="aceptar()" *ngIf="router.url == '/empleados/solicitudVacaciones'">
+    <mat-icon>check</mat-icon>Aceptar
+  </button>
+  &nbsp;
+  &nbsp;
+  <button mat-stroked-button color="primary" (click)="rechazar()" *ngIf="router.url == '/empleados/solicitudVacaciones'">
+    <mat-icon>close</mat-icon>Rechazar			
   </button>
   &nbsp;
   &nbsp;

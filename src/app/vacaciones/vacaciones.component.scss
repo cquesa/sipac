@@ -9,6 +9,10 @@ mat-form-field.mat-form-field {
     font-size: 12px;
   }
 
+  .mat-input-element:disabled {
+    color: black !important;
+  }
+
 .grid-vacaciones {
     margin: 2rem;
     margin-top: 0;
@@ -21,6 +25,10 @@ mat-form-field.mat-form-field {
         border-collapse: collapse;
         text-align: center;
     }
+    tr.fondoAzul {
+        color: white;
+        background-color: blue;
+    }
     td {
         height: 0.5rem !important;
         padding: 0;
@@ -29,6 +37,21 @@ mat-form-field.mat-form-field {
         }
         &.anchoColBtn {
             width: 1.5rem;
+        }
+        &.borrador {
+            background-color: darkgrey;
+        }
+        &.enviado {
+            background-color: lightslategrey;
+        }
+        &.visado {
+            background-color: green;
+        }
+        &.rechazado {
+            background-color: red;
+        }        
+        &.disfrutado {
+            background-color: blue;
         }
     }
 }

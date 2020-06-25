@@ -16,7 +16,6 @@ import { GastosComponent } from './gastos/gastos.component';
 import { VacacionesComponent } from './vacaciones/vacaciones.component';
 import { EmpleadosComponent } from './empleados/empleados.component';
 import { SelecMesComponent } from './selec-mes/selec-mes.component';
-import { CalgastosNgxComponent } from './gastos/calgastos_ngx/calgastos-ngx.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -35,6 +34,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PartesComponent } from './partes/partes.component';
 import { PartesActividadesComponent } from './partes-actividades/partes-actividades.component';
 import { SelecAnioComponent } from './vacaciones/selec-anio/selec-anio.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports:      [ 
@@ -43,6 +43,7 @@ import { SelecAnioComponent } from './vacaciones/selec-anio/selec-anio.component
     AppRoutingModule, 
     FormsModule, 
     ReactiveFormsModule,
+    HttpClientModule,
     NgbModule,
     BsDatepickerModule,
     MatButtonModule,
@@ -57,7 +58,7 @@ import { SelecAnioComponent } from './vacaciones/selec-anio/selec-anio.component
     MatCardModule,
     MatGridListModule,
     BsDatepickerModule.forRoot() ],
-  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, NotaComponent, GastosComponent, CalgastosNgxComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent, PartesComponent, PartesActividadesComponent, SelecAnioComponent ],
+  declarations: [ AppComponent, HeaderComponent, FooterComponent, LoginComponent, HomeComponent, ActividadesComponent, NotaComponent, GastosComponent, VacacionesComponent, EmpleadosComponent, SelecMesComponent, PartesComponent, PartesActividadesComponent, SelecAnioComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
