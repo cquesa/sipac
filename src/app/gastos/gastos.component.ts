@@ -310,10 +310,10 @@ export class GastosComponent implements OnInit {
     );
 
     if (this.periodo == null) {
-      this.periodo = this.fechaActual.getMonth()+1;
+      this.periodo = this.fechaActual.getMonth();
     }
-    this.minDate = new Date(this.fechaActual.getFullYear(), this.periodo-1, 1); 
-    this.maxDate = new Date(this.fechaActual.getFullYear(), this.periodo, 0);
+    this.minDate = new Date(this.fechaActual.getFullYear(), this.periodo, 1); 
+    this.maxDate = new Date(this.fechaActual.getFullYear(), this.periodo+1, 0);
 
     this.bsConfig = Object.assign({}, 
       { isAnimated: true },
@@ -332,8 +332,8 @@ export class GastosComponent implements OnInit {
 
   seleccionPeriodo(evt) {
     this.periodo = evt;
-    this.bsConfig.minDate = new Date(this.fechaActual.getFullYear(), this.periodo -1, 1); 
-    this.bsConfig.maxDate = new Date(this.fechaActual.getFullYear(), this.periodo, 0);
+    this.bsConfig.minDate = new Date(this.fechaActual.getFullYear(), this.periodo , 1); 
+    this.bsConfig.maxDate = new Date(this.fechaActual.getFullYear(), this.periodo+1, 0);
     this.GASTOS_EMPLEADO = this.gastosService.getGastos(this.empleado, this.periodo);         
   }
 
