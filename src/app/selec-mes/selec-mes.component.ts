@@ -28,6 +28,9 @@ export class SelecMesComponent implements OnInit {
     this.nombre = 'Domingo RodrÃ­guez Urbita';
     this.inicializarPeriodos();
     this.periodoSel = this.periodos[1].valor;
+    if (this.periodo) {
+      this.periodoSel = this.periodo;
+    } 
     if (this.empleado) {
       for (let aux of this.empleados) {
         if (aux.valor == this.empleado) {
