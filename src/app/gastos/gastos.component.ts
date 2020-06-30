@@ -4,8 +4,10 @@ import { BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepick
 import { defineLocale, esLocale } from 'ngx-bootstrap/chronos';
 import { GastosService } from './gastos.service';
 import {  ActivatedRoute, ParamMap } from '@angular/router';
+import { LoginService } from '../login/login.service';
+import { FormControl } from '@angular/forms';
 
-let GASTOS_EMPLEADO:GastosInterface[] = [];
+
 
 
 const PROYECTOS = [
@@ -26,10 +28,37 @@ const PROYECTOS = [
     dsProyecto : 'Interproyecto'
   },
   
-]
+];
+
+const TIPO_GASTO = [
+  {
+    idTipoGasto: 1,
+    dsTipoGasto: 'Transporte'
+  },
+  {
+    idTipoGasto: 2,
+    dsTipoGasto: 'Comida'
+  },
+  {
+    idTipoGasto: 3,
+    dsTipoGasto: 'Alojamiento'
+  },
+  {
+    idTipoGasto: 4,
+    dsTipoGasto: 'Taxi'
+  },
+  {
+    idTipoGasto: 5,
+    dsTipoGasto: 'Desayuno'
+  }
+  
+  
+];
 
 const GASTOS_EMPLEADO_ABRIL:GastosInterface[]  = [
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 1,
       dsProyecto: 'CMMA'
@@ -51,6 +80,8 @@ const GASTOS_EMPLEADO_ABRIL:GastosInterface[]  = [
     }
   },
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 4,
       dsProyecto: 'Interproyecto'
@@ -72,6 +103,8 @@ const GASTOS_EMPLEADO_ABRIL:GastosInterface[]  = [
     }
   },
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 3,
       dsProyecto: 'Proyecto 2'
@@ -93,6 +126,8 @@ const GASTOS_EMPLEADO_ABRIL:GastosInterface[]  = [
     }
   },
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 2,
       dsProyecto: 'Proyecto 1'
@@ -117,6 +152,8 @@ const GASTOS_EMPLEADO_ABRIL:GastosInterface[]  = [
 
 const GASTOS_EMPLEADO_MAYO:GastosInterface[]  = [
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 1,
       dsProyecto: 'CMMA'
@@ -136,6 +173,8 @@ const GASTOS_EMPLEADO_MAYO:GastosInterface[]  = [
     }
   },
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 1,
       dsProyecto: 'CMMA'
@@ -158,6 +197,8 @@ const GASTOS_EMPLEADO_MAYO:GastosInterface[]  = [
 
 const GASTOS_EMPLEADO_JUNIO:GastosInterface[]  = [
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 1,
       dsProyecto: 'CMMA'
@@ -177,6 +218,8 @@ const GASTOS_EMPLEADO_JUNIO:GastosInterface[]  = [
     }
   },
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 2,
       dsProyecto: 'Proyecto 1'
@@ -196,6 +239,8 @@ const GASTOS_EMPLEADO_JUNIO:GastosInterface[]  = [
     }
   },
   {
+    empleado: "",
+    periodo: 0,
     proyecto : {
       idProyecto: 4,
       dsProyecto: 'Interproyecto'
@@ -223,6 +268,7 @@ const GASTOS_EMPLEADO_JUNIO:GastosInterface[]  = [
 })
 export class GastosComponent implements OnInit {
 
+  GASTOS_EMPLEADO:GastosInterface[] = [];
 
   bsConfig: Partial<BsDaterangepickerConfig>;
 
@@ -235,17 +281,25 @@ export class GastosComponent implements OnInit {
   fechaActual = new Date(); 
   minDate:Date;
   maxDate:Date;
+  anioSel: number;
 
+  proyectoBBDD = new FormControl();
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private localeService: BsLocaleService,
-    private gastosService: GastosService) {
+    private gastosService: GastosService,
+    private loginService: LoginService) {
     defineLocale('es', esLocale);
     this.localeService.use('es');
   }
 
   ngOnInit(): void {
-     
+    let d = new Date();
+    this.anioSel = d.getFullYear();
+    let usuario = this.loginService.getUsuario();
+    this.empleado = usuario.empleado;   
+
     this.activatedRoute.paramMap.subscribe(
       (parametros: ParamMap) => {
         let empleado = parametros.get('empleado');
@@ -262,13 +316,8 @@ export class GastosComponent implements OnInit {
     if (this.periodo == null) {
       this.periodo = this.fechaActual.getMonth()+1;
     }
-
     this.minDate = new Date(this.fechaActual.getFullYear(), this.periodo-1, 1); 
     this.maxDate = new Date(this.fechaActual.getFullYear(), this.periodo, 0);
-
-    //this.minDate = new Date(('0'+this.periodo).slice(-2) + '/01/2020');
-    //this.maxDate = new Date(('0'+this.periodo).slice(-2) + '/30/2020');
-
 
     this.bsConfig = Object.assign({}, 
       { isAnimated: true },
@@ -280,49 +329,50 @@ export class GastosComponent implements OnInit {
       { displayOneMonthRange: true},
       { displayMonths: 1}
       );
+    
+    this.GASTOS_EMPLEADO = this.gastosService.getGastos(this.empleado, this.periodo);
+    
     }
 
   seleccionPeriodo(evt) {
     this.periodo = evt;
     this.bsConfig.minDate = new Date(this.fechaActual.getFullYear(), this.periodo -1, 1); 
     this.bsConfig.maxDate = new Date(this.fechaActual.getFullYear(), this.periodo, 0);
+    this.GASTOS_EMPLEADO = this.gastosService.getGastos(this.empleado, this.periodo);         
   }
 
   getProyectos() {
     return PROYECTOS;
   }
 
-  seleccionProyecto(evt) {
-    console.log('TO DO seleccionProyecto', evt);
+  getTipoGasto() {
+    return TIPO_GASTO;
   }
 
-  listaGastos() {
-    // Hacer llamada al backend para obtener listado de gastos empleado para el mes seleccionado
-    if (this.periodo == 4) {
-      GASTOS_EMPLEADO = GASTOS_EMPLEADO_ABRIL;
-      return GASTOS_EMPLEADO;
+  compararProyectos(objeto1, objeto2) {
+    if (objeto1==null || objeto2==null) {
+      return false;
     }
-    if (this.periodo == 5) {
-      GASTOS_EMPLEADO = GASTOS_EMPLEADO_MAYO;
-      return GASTOS_EMPLEADO;
-    }
-    if (this.periodo == 6) {
-      GASTOS_EMPLEADO = GASTOS_EMPLEADO_JUNIO;
-      return GASTOS_EMPLEADO;
-    }
-    if (this.periodo == 7) {
-      // this.gastosService.getAll(this.periodo);
-      GASTOS_EMPLEADO = this.gastosService.getAll(this.periodo);;
-    }
-
-
+    if (objeto1.idProyecto===objeto2.idProyecto) {
+      return objeto1.dsProyecto===objeto2.dsProyecto;
+    }    
   }
 
+  compararTiposGasto(objeto1, objeto2) {
+    if (objeto1==null || objeto2==null) {
+      return false;
+    }
+    if (objeto1.idTipoGasto===objeto2.idTipoGasto) {
+      return objeto1.dsTipoGasto===objeto2.dsTipoGasto;
+    }    
+  }
 
   annadir() {
     let gasto:GastosInterface;
     
     gasto = {
+      empleado: this.empleado,
+      periodo: this.periodo,    
       proyecto : {
         idProyecto: null,
         dsProyecto: ''
@@ -337,29 +387,46 @@ export class GastosComponent implements OnInit {
       nmTotal: 0,
       dsDescripcion: '',
       estado : {
-        idEstado: null,
+        idEstado: 0,
         dsEstado: 'Borrador'}
     }
 
-    GASTOS_EMPLEADO.push(gasto); 
+    this.GASTOS_EMPLEADO.push(gasto); 
+  }
+
+  fromTo(estadoFrom:number, estadoTO:number, dsEstadoTO:string) {
+    for (let gasto of this.GASTOS_EMPLEADO) {
+      if (gasto.estado.idEstado == estadoFrom) {
+        gasto.estado.idEstado = estadoTO;
+        gasto.estado.dsEstado = dsEstadoTO;
+      }
+
+    }
+    this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
   }
 
   borrar(i:number) {
     // Hacer llamada al backend para borrar el gasto con índice i
-    this.gastosService.borrarGasto(i);
-    GASTOS_EMPLEADO.splice(i, 1);
+    this.GASTOS_EMPLEADO.splice(i, 1);
+    this.gastosService.borrarGasto(i);    
   }
 
   guardar() {
     // Hacer llamada al backend para guardar los gastos
-    this.gastosService.guardarGastos(GASTOS_EMPLEADO);
-    console.log(GASTOS_EMPLEADO);
-    console.log(JSON.stringify(GASTOS_EMPLEADO));
+    this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
   }
 
   enviar() {
-    this.gastosService.enviarGastos(GASTOS_EMPLEADO);
-    this.listaGastos();
+    this.fromTo(0, 1, 'Enviado');
+    this.gastosService.enviarGastos(this.GASTOS_EMPLEADO);
+  }
+
+  visar() {
+    this.fromTo(1, 2, 'Visado');
+  }
+
+  rechazar() {
+    this.fromTo(2, 3, 'Rechazado');
   }
 
   cancelar() {
@@ -369,13 +436,8 @@ export class GastosComponent implements OnInit {
 
   }
 
-onChange(index:number) {
-  let fechaString = this.rangoFechas[0];
-  //GASTOS_EMPLEADO[index].fcDesde;
-}
-
-actualizaTotal(index:number) {
-  GASTOS_EMPLEADO[index].nmTotal = GASTOS_EMPLEADO[index].nmUnidades * GASTOS_EMPLEADO[index].nmImporte;
-}
+  actualizaTotal(index:number) {
+    this.GASTOS_EMPLEADO[index].nmTotal = this.GASTOS_EMPLEADO[index].nmUnidades * this.GASTOS_EMPLEADO[index].nmImporte;
+  }
 
 }

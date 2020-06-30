@@ -31,11 +31,11 @@
               </mat-select>
             </mat-form-field>
           </td>
-          <td  *ngFor="let hora of actividad.horas ; let h = index ; trackBy:trackByFn">
-          <input type="number" step="1" (input)="calcularTotales()" matInput size="2" maxlength="2" placeholder="0" min="0" max="24" [(ngModel)]="actividad.horas[h]"
-              class="margin-dcho-small" (dblclick)="open(actividad, h)"
-              [ngStyle]="actividad.horas[h] > 0 ? {'color': 'blue'} : {}">
-          </td>
+          <td *ngFor="let hora of actividad.horas ; let h = index ; trackBy:trackByFn"  [ngStyle]="{'color':'black','background-color':getBackgroundColor(h)}">
+            <input type="number" step="1" (input)="calcularTotales()" matInput size="2" maxlength="2" placeholder="0" min="0" max="24" [(ngModel)]="actividad.horas[h]"
+                class="margin-dcho-small" (dblclick)="open(actividad, h)"
+                [ngStyle]="actividad.horas[h] > 0 ? {'color': 'blue'} : {'color': 'black'}">
+          </td>     
           <td class="anchoColBtn centrado"
                 [ngClass]="{'borrador': parteActividad.estado == 'borrador', 
                 'enviado': parteActividad.estado == 'enviado', 

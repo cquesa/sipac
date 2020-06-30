@@ -1,4 +1,7 @@
 export interface GastosInterface {
+    
+    empleado : string,
+    periodo : number,    
     proyecto : {
         idProyecto :number,    
         dsProyecto : string

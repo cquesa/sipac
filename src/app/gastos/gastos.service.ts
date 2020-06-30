@@ -18,27 +18,64 @@ export class GastosService {
   urlDelete = "";
   urlEnviar = "";
 
+  nuevoArray:GastosInterface[];
+
   constructor(private http : HttpClient,
     private datosUser : LoginService) { }
 
-  getAll(periodo:number) {
+  getGastos(empleado: string, periodo:number) {
     // Llamar url php Get
     this.usuario = this.datosUser.getUsuario();
-    let elementos:GastosInterface[];
+    let gastos:GastosInterface[];
     //return this.http.get(this.urlGetAll + '/' + this.usuario.empleado + '/' + periodo);
-    return elementos;
+
+    let aux = localStorage.getItem('gastos_' + empleado + "-" + periodo);
+    if (aux  && aux.localeCompare("null") != 0) {
+      gastos = JSON.parse(aux);
+
+      for (let x=0; x<gastos.length;x++) {
+        gastos[x].rangoFechas[0] = new Date(gastos[x].rangoFechas[0]);
+        gastos[x].rangoFechas[1] = new Date(gastos[x].rangoFechas[1]);
+
+        gastos[x].proyecto.idProyecto = gastos[x].proyecto.idProyecto;
+        gastos[x].proyecto.dsProyecto = gastos[x].proyecto.dsProyecto;
+      }
+
+      return gastos;
+    }
+
+    // Un gasto vacío por defecto
+    gastos = [
+      {
+        empleado: empleado,
+        periodo: periodo,    
+        proyecto : {
+          idProyecto: null,
+          dsProyecto: ''
+        },
+        rangoFechas: [new Date(''),new Date('')],
+        tipoGasto : {
+          idTipoGasto: null,
+          dsTipoGasto: ''
+        },
+        nmUnidades: 0,
+        nmImporte: 0,
+        nmTotal: 0,
+        dsDescripcion: '',
+        estado : {
+          idEstado: 0,
+          dsEstado: 'Borrador'}
+      }
+    ];
+
+    return gastos;
   }
 
-  guardarGastos(gastos:GastosInterface[]) {
+  guardarGastos(empleado: string, periodo: number, gastos:GastosInterface[]) {
     // Llamar url php Put
     JSON.stringify(gastos);
     //this.http.put(this.urlGetPut, JSON.stringify(gastos)).subscribe();
-    //localStorage.setItem("GASTOS_EMPLEADO", JSON.stringify(gastos));
-  }
-
-  updateGasto(id:number) {
-    // Llamar url php Post
-    //this.http.post(this.urlPost, id).subscribe();
+    localStorage.setItem('gastos_' + empleado + "-" + periodo, JSON.stringify(gastos));
   }
 
   borrarGasto(id:number) {

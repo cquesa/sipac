@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ParteActividad, Actividad } from '../actividad';
+import { CalendarioService } from '../calendario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActividadesService {
 
-  constructor() { }
+  constructor(private calendarioService: CalendarioService) { }
 
 
-  getParteActividad (empleado: string, mes: number) : ParteActividad {
+  getParteActividad (empleado: string, mes: number, anio: number) : ParteActividad {
     let ret: ParteActividad;
 
     let aux = localStorage.getItem('parteActividad_' + empleado + "-" + mes);
@@ -21,14 +22,13 @@ export class ActividadesService {
     ret = new ParteActividad();
     ret.empleado = empleado;
     ret.mes = mes;
+    ret.anio = anio;
     ret.estado = 'borrador';
 
     // Una actividad vacía por defecto
     let actividad:  Actividad = new Actividad();
-    actividad.horas =
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    actividad.horas = this.calendarioService.getMes(mes, anio);
 
     ret.actividades.push(actividad); 
     return ret;

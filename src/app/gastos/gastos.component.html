@@ -7,18 +7,20 @@
 			<tr class="fondoAzul"> 
 				<th scope="col">Proyecto</th><th scope="col">Desde - Hasta</th><th scope="col">Tipo</th>
 		 		<th scope="col">Unidades</th><th scope="col">Importe</th><th scope="col">Total</th><th scope="col">Descripción</th>
-				<th scope="col">Estado</th>
+				<th scope="col">Estado</th><th scope="col">Borrar</th>
 		 	</tr>
 		</thead>
 	  	<tbody>
-			<tr *ngFor="let gasto of listaGastos(); index as i">
+			<tr *ngFor="let gasto of GASTOS_EMPLEADO; index as i" 
+				[ngStyle]="gasto.idEstado > 0 ? {'color': 'blue'} : {'color': 'black'}">
 				<td>
-					<div>
-						<mat-select (change)="guardar()" class="campo100 form-control" [(ngModel)]="gasto.proyecto" name="proyecto">
-							<mat-option *ngFor="let proy of getProyectos(); index as p" [value]="proy" >
+					<div> 
+						<mat-select [compareWith]="compararProyectos" class="campo100 form-control" [(ngModel)]="gasto.proyecto" name="proyecto">
+							<mat-option *ngFor="let proy of getProyectos(); index as p" [value]="proy" [id]="proy.idProyecto">
 							  {{ proy.dsProyecto }}
 							</mat-option>
 						</mat-select>
+						
 						<!--{{gasto.proyecto.dsProyecto}}-->
 						<!--<select class="custom-select" selected value="gasto.proyecto.dsProyecto" [(ngModel)]="gasto.proyecto">  
 							<option value="">Lista de Proyectos - Obtener del backend</option>
@@ -54,17 +56,24 @@
 						</div>
 					</div>
 				</td>
-				<td>			
-					<div>
-						<select class="custom-select" [(ngModel)]="gasto.tipoGasto.dsTipoGasto">
-							<option value="">Lista de Tipos - Obtener del backend</option>
+				<td>		
+					<div>	
+						<mat-select [compareWith]="compararTiposGasto" class="campo100 form-control" [(ngModel)]="gasto.tipoGasto" name="tipo" >
+							<mat-option *ngFor="let tip of getTipoGasto(); index as t" [value]="tip" >
+							  {{ tip?.dsTipoGasto }}
+							</mat-option>
+						</mat-select>
+
+
+						<!--<select class="custom-select" [(ngModel)]="gasto.tipoGasto.dsTipoGasto">
+							<option value="">Lista de Tipos - Obtener del backend</option>-->
 							<!-- Aquí irá un *ngFor con la lista de Tipos -->
-							<option value="Transporte">Transporte</option>
+							<!--<option value="Transporte">Transporte</option>
 							<option value="Comida">Comida</option>
 							<option value="Alojamiento">Alojamiento</option>
 							<option value="Taxi">Taxi</option>
 							<option value="Desayuno">Desayuno</option>
-						</select>
+						</select>--> 
 					</div>
 				</td>
 				<td>
@@ -79,7 +88,10 @@
 				<td>
 					<input type="text" class="form-control campoNum" [(ngModel)]="gasto.dsDescripcion"/>
 				</td>
-				<td>
+				<td [ngClass]="{'borrador': gasto.idEstado == '0', 
+                'enviado': gasto.idEstado == '1', 
+                'visado': gasto.idEstado == '2', 
+                'rechazado': gasto.idEstado == '3'}">
 					<input type="text" disabled="true" class="form-control campoNum" value= "{{gasto.estado.dsEstado}}"/>
 				</td>
 				<td>
@@ -129,6 +141,16 @@
 		&nbsp;
 		<button mat-stroked-button color="primary" (click)="imprimir()">
 			<mat-icon>print</mat-icon>Imprimir
+		</button>
+		&nbsp;
+		&nbsp;
+		<button mat-stroked-button color="primary" (click)="imprimir()">
+			<mat-icon>done</mat-icon>Visar
+		</button>
+		&nbsp;
+		&nbsp;
+		<button mat-stroked-button color="primary" (click)="imprimir()">
+			<mat-icon>cancel</mat-icon>Rechazar
 		</button>	
 	</div>
 

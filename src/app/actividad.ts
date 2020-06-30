@@ -5,6 +5,7 @@ export class ParteActividad {
 
     public empleado: string;
     public mes: number;
+    public anio: number;
 
     public actividades: Actividad[] = [];
 
