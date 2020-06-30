@@ -92,9 +92,9 @@ export class ActividadesComponent implements OnInit {
     this.actividadesService.guardarParteActividad(this.empleado, this.periodo, this.parteActividad);
   }
 
-  fromTo(estadoFrom: string, esadoTO: string) {
+  fromTo(estadoFrom: string, estadoTO: string) {
     if (this.parteActividad.estado != null && this.parteActividad.estado.localeCompare(estadoFrom) == 0) {
-      this.parteActividad.estado = esadoTO;
+      this.parteActividad.estado = estadoTO;
     }
     this.actividadesService.guardarParteActividad(this.empleado, this.periodo, this.parteActividad);
   }

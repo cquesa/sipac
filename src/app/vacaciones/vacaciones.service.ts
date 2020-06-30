@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Vacaciones, DiaVacaciones } from '../vacaciones';
 import { VacacionesMes } from '../vacaciones';
+import { CalendarioService } from '../calendario.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VacacionesService {
 
-  constructor() { }
+  constructor(private calendarioService: CalendarioService) { }
 
   getVacaciones (empleado: string, anio: number) : Vacaciones {
     let ret: Vacaciones;
@@ -30,18 +31,18 @@ export class VacacionesService {
     ret.dias2020 = 23;
     ret.vacaciones = [];
 
-    this.mesVacaciones(ret, "Enero", anio);
-    this.mesVacaciones(ret, "Febrero", anio);
-    this.mesVacaciones(ret, "Marzo", anio);
-    this.mesVacaciones(ret, "Abril", anio);
-    this.mesVacaciones(ret, "Mayo", anio);
-    this.mesVacaciones(ret, "Junio", anio);
-    this.mesVacaciones(ret, "Julio", anio);
-    this.mesVacaciones(ret, "Agosto", anio);
-    this.mesVacaciones(ret, "Septiembre", anio);
-    this.mesVacaciones(ret, "Octubre", anio);
-    this.mesVacaciones(ret, "Noviembre", anio);
-    this.mesVacaciones(ret, "Diciembre", anio);
+    this.mesVacaciones(ret, "Enero", 0, anio);
+    this.mesVacaciones(ret, "Febrero", 1, anio);
+    this.mesVacaciones(ret, "Marzo", 2,  anio);
+    this.mesVacaciones(ret, "Abril", 3, anio);
+    this.mesVacaciones(ret, "Mayo", 4, anio);
+    this.mesVacaciones(ret, "Junio", 5, anio);
+    this.mesVacaciones(ret, "Julio", 6, anio);
+    this.mesVacaciones(ret, "Agosto", 7, anio);
+    this.mesVacaciones(ret, "Septiembre", 8, anio);
+    this.mesVacaciones(ret, "Octubre", 9, anio);
+    this.mesVacaciones(ret, "Noviembre", 10, anio);
+    this.mesVacaciones(ret, "Diciembre", 11, anio);
 
     /* Mis vacaciones disfrutadas
     ret.vacaciones[0].dias[30].check = true;
@@ -54,7 +55,7 @@ export class VacacionesService {
     return ret;
   }
 
-  private mesVacaciones(empleado: Vacaciones, mes: string, anio: number) {
+  private mesVacaciones(empleado: Vacaciones, mes: string, periodo: number, anio: number) {
     let vacacion = new VacacionesMes(mes,
     [new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), 
       new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false),
@@ -64,6 +65,15 @@ export class VacacionesService {
       new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), new DiaVacaciones(false), 
       new DiaVacaciones(false)], 0
     );
+
+    let diasFinde = this.calendarioService.getDiasFinde(periodo, anio);  
+  
+    for (let i = 0; i < vacacion.dias.length; i++) {
+      if (diasFinde.includes(i + 1)) {
+        vacacion.dias[i].festivo = true;
+      }
+    } 
+
     empleado.vacaciones.push(vacacion);
   }
 

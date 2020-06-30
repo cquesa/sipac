@@ -13,10 +13,8 @@ export class GastosService {
   };
 
   urlGetAll = "";
-  urlGetPut = "";
-  urlPost = "";
+  urlPut = "";
   urlDelete = "";
-  urlEnviar = "";
 
   nuevoArray:GastosInterface[];
 
@@ -74,18 +72,13 @@ export class GastosService {
   guardarGastos(empleado: string, periodo: number, gastos:GastosInterface[]) {
     // Llamar url php Put
     JSON.stringify(gastos);
-    //this.http.put(this.urlGetPut, JSON.stringify(gastos)).subscribe();
+    //this.http.put(this.urlPut, JSON.stringify(gastos)).subscribe();
     localStorage.setItem('gastos_' + empleado + "-" + periodo, JSON.stringify(gastos));
   }
 
   borrarGasto(id:number) {
     // Llamar url php Delete
     //this.http.post(this.urlDelete, id).subscribe();
-  }
-
-  enviarGastos(gastos:GastosInterface[]) {
-    // Llamar url php Delete
-    //this.http.post(this.urlEnviar, gastos).subscribe();
   }
 
 

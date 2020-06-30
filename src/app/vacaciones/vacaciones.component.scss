@@ -38,6 +38,9 @@ mat-form-field.mat-form-field {
         &.anchoColBtn {
             width: 1.5rem;
         }
+        &.festivo {
+            background-color: yellow;
+        }
         &.borrador {
             background-color: darkgrey;
         }

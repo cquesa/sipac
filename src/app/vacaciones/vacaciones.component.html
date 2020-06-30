@@ -4,7 +4,7 @@
 <mat-grid-list   class="cabecera-grid-list"  cols="3" rowHeight="2.6:1">
   <mat-grid-tile class="cabecera-grid-tile"> 
     <app-selec-anio  [titulo]="'Parte de Vacaciones Anuales'"
-  (anioEvent)="seleccionAnio($event)"
+  (anioEvent)="seleccionAnio($event)" [empleado]="empleadoSel" [anio]="anioSel"
   (empleadoEvent)="seleccionEmpleado($event)"
   ></app-selec-anio>
   </mat-grid-tile>
@@ -83,13 +83,15 @@
                 {{ vacacion.mes  }}
             </td>
             <td  *ngFor="let dia of vacacion.dias ; let h = index ; trackBy:trackByFn"
-              [ngClass]="{'borrador': vacacion.dias[h].estado == 'borrador', 
+              [ngClass]="{'festivo': vacacion.dias[h].festivo, 
+                          'borrador': vacacion.dias[h].estado == 'borrador', 
                           'enviado': vacacion.dias[h].estado == 'enviado', 
                           'visado': vacacion.dias[h].estado == 'visado', 
                           'rechazado': vacacion.dias[h].estado == 'rechazado', 
                           'disfrutado': vacacion.dias[h].estado == 'disfrutado'}">
                 <input type="checkbox" (change)="clickDia(i, h)"  [(ngModel)]="vacacion.dias[h].check"
-                class="margin-dcho-small" disabled="{{ vacacion.dias[h].estado == 'visado' 
+                class="margin-dcho-small" disabled="{{ vacacion.dias[h].festivo
+                                                     || vacacion.dias[h].estado == 'visado' 
                                                      || vacacion.dias[h].estado == 'enviado' 
                                                      || vacacion.dias[h].estado == 'disfrutado'  
                                                      || router.url == '/empleados/solicitudVacaciones' }}" >  

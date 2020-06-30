@@ -3,11 +3,8 @@ import { GastosInterface } from './model/gastosInterface';
 import { BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale, esLocale } from 'ngx-bootstrap/chronos';
 import { GastosService } from './gastos.service';
-import {  ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
-import { FormControl } from '@angular/forms';
-
-
 
 
 const PROYECTOS = [
@@ -271,21 +268,18 @@ export class GastosComponent implements OnInit {
   GASTOS_EMPLEADO:GastosInterface[] = [];
 
   bsConfig: Partial<BsDaterangepickerConfig>;
-
-  proyecto = '';
-  estado:string = "Borrador";
-  rangoFechas: Date[];
   empleado: string;
   periodo: number;
   
   fechaActual = new Date(); 
   minDate:Date;
   maxDate:Date;
-  anioSel: number;
-
-  proyectoBBDD = new FormControl();
+  usuario;
+  perfil;
+  revisionGerente: boolean = false;
   
   constructor(
+    public router: Router, 
     private activatedRoute: ActivatedRoute,
     private localeService: BsLocaleService,
     private gastosService: GastosService,
@@ -296,9 +290,10 @@ export class GastosComponent implements OnInit {
 
   ngOnInit(): void {
     let d = new Date();
-    this.anioSel = d.getFullYear();
-    let usuario = this.loginService.getUsuario();
-    this.empleado = usuario.empleado;   
+    this.usuario = this.loginService.getUsuario();
+    this.empleado = this.usuario.empleado;   
+
+    this.perfil = this.loginService.getPerfil();
 
     this.activatedRoute.paramMap.subscribe(
       (parametros: ParamMap) => {
@@ -306,6 +301,7 @@ export class GastosComponent implements OnInit {
         let periodo = parametros.get('periodo');
         if (empleado) {
           this.empleado = empleado;
+          this.revisionGerente = true;
         }
         if (periodo) {
           this.periodo = parseInt(periodo);
@@ -331,7 +327,7 @@ export class GastosComponent implements OnInit {
       );
     
     this.GASTOS_EMPLEADO = this.gastosService.getGastos(this.empleado, this.periodo);
-    
+    this.router.url;
     }
 
   seleccionPeriodo(evt) {
@@ -413,20 +409,41 @@ export class GastosComponent implements OnInit {
 
   guardar() {
     // Hacer llamada al backend para guardar los gastos
-    this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
+    this.fromTo(3, 0, 'Borrador');
+    if (this.validaCampos()) {
+      this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
+    }
   }
 
+  validaCampos() {
+    for (let x = 0; x < this.GASTOS_EMPLEADO.length; x++) {
+      if (this.GASTOS_EMPLEADO[x].proyecto.idProyecto == null ||
+        this.GASTOS_EMPLEADO[x].rangoFechas[0] == null ||
+        this.GASTOS_EMPLEADO[x].rangoFechas[1] == null ||
+        this.GASTOS_EMPLEADO[x].tipoGasto.idTipoGasto == null ||
+        this.GASTOS_EMPLEADO[x].nmTotal == 0) {
+          alert('Datos incompletos. Por favor, informe todos los campos.')
+          return false;
+        }
+    }
+    
+    return true;
+  }
   enviar() {
     this.fromTo(0, 1, 'Enviado');
-    this.gastosService.enviarGastos(this.GASTOS_EMPLEADO);
+    if (this.validaCampos()) {
+      this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
+    }
   }
 
   visar() {
     this.fromTo(1, 2, 'Visado');
+    this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
   }
 
   rechazar() {
-    this.fromTo(2, 3, 'Rechazado');
+    this.fromTo(1, 3, 'Rechazado');
+    this.gastosService.guardarGastos(this.empleado, this.periodo, this.GASTOS_EMPLEADO);
   }
 
   cancelar() {

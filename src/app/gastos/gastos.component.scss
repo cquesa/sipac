@@ -42,7 +42,7 @@ tr.fondoAzul {
 
 td {
     height: 0.5rem !important;
-    padding: 0;
+    //padding: 0;
     input {
         margin: 0 !important;
     }
@@ -65,3 +65,23 @@ td {
         background-color: blue;
     }
 }
+
+
+input {
+
+  
+
+  &.borrador {
+  background-color: darkgrey;
+}
+&.enviado {
+  background-color: lightslategrey;
+}
+&.visado {
+  background-color: rgba(0, 255, 0, 0.575);
+}
+&.rechazado {
+  color:black;
+  background-color: rgb(218, 68, 68);
+}        
+} 

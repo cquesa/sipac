@@ -34,6 +34,7 @@ export class DiaVacaciones {
     // constructor class expression
     constructor(
         public check: boolean,
+        public festivo?: boolean,
         public estado?: string
         ) { }
                 

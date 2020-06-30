@@ -17,10 +17,10 @@ export class PartesActividadesComponent implements OnInit {
 
   periodos = [
     {valor: null, muestraValor: null},
-    {valor: 4, muestraValor:'abril - 2020'},
-    {valor: 5, muestraValor:'mayo - 2020'},
-    {valor: 6, muestraValor:'junio - 2020'},
-    {valor: 7, muestraValor:'julio - 2020'}
+    {valor: 3, muestraValor:'abril - 2020'},
+    {valor: 4, muestraValor:'mayo - 2020'},
+    {valor: 5, muestraValor:'junio - 2020'},
+    {valor: 6, muestraValor:'julio - 2020'}
   ];
 
   @Input() nombre:string;

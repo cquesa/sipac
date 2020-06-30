@@ -88,11 +88,12 @@
 				<td>
 					<input type="text" class="form-control campoNum" [(ngModel)]="gasto.dsDescripcion"/>
 				</td>
-				<td [ngClass]="{'borrador': gasto.idEstado == '0', 
-                'enviado': gasto.idEstado == '1', 
-                'visado': gasto.idEstado == '2', 
-                'rechazado': gasto.idEstado == '3'}">
-					<input type="text" disabled="true" class="form-control campoNum" value= "{{gasto.estado.dsEstado}}"/>
+				<td>
+					<input type="text" disabled="true" class="form-control campoNum" value= "{{gasto.estado.dsEstado}}"
+					[ngClass]="{'borrador': gasto.estado.idEstado == 0, 
+							'enviado': gasto.estado.idEstado == 1, 
+							'visado': gasto.estado.idEstado == 2, 
+							'rechazado': gasto.estado.idEstado == 3}"/>
 				</td>
 				<td>
 					<div>
@@ -144,12 +145,12 @@
 		</button>
 		&nbsp;
 		&nbsp;
-		<button mat-stroked-button color="primary" (click)="imprimir()">
+		<button *ngIf="revisionGerente" mat-stroked-button color="primary" (click)="visar()">
 			<mat-icon>done</mat-icon>Visar
 		</button>
 		&nbsp;
 		&nbsp;
-		<button mat-stroked-button color="primary" (click)="imprimir()">
+		<button *ngIf="revisionGerente" mat-stroked-button color="primary" (click)="rechazar()">
 			<mat-icon>cancel</mat-icon>Rechazar
 		</button>	
 	</div>
