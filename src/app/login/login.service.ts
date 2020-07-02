@@ -1,14 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface Empleado {
+  codigo: string;
+  nombre: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor() { }
+  myAppUrl: string = ""; 
 
-
-  
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl) {
+    this.myAppUrl = baseUrl;
+  }
+    
   isAuth() {
     return localStorage.getItem("auth") != null
       && localStorage.getItem("auth").localeCompare("null") != 0;
@@ -19,11 +27,18 @@ export class LoginService {
       usuario: email, password: password
     };
     // Validar email y password y obtener usuario
-    let usuario = {
-      empleado: 'cquesadag', nombre: 'Carlos Quesada Galán', perfil: 1
-    };
-    localStorage.setItem("auth", JSON.stringify(login));
-    localStorage.setItem("usuario", JSON.stringify(usuario));
+
+    /*
+    let empleados = this.http.get <Empleado[]> (this.myAppUrl + 'api/Employee/Index')
+      .subscribe(empleados => {
+        //console.log('JSON empleados = ' + empleados);
+        for(var i=0; i<=empleados.length; i++){
+          console.log('Empleado ' + i + "= " + empleados[i]);
+        }
+      });
+    */
+   return this.http.get(this.myAppUrl + 'api/Employee/login/' + email + "/" + password);
+
   }
 
   logout() {

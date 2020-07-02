@@ -37,6 +37,11 @@ import { SelecAnioComponent } from './vacaciones/selec-anio/selec-anio.component
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
+
+  providers: [
+    { provide: 'BASE_URL', useFactory: getBaseUrl }
+  ],
+
   imports:      [ 
     BrowserModule,     
     BrowserAnimationsModule,
@@ -62,3 +67,8 @@ import { HttpClientModule } from '@angular/common/http';
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
+
+
+export function getBaseUrl() {
+  return document.getElementsByTagName('base')[0].href;
+}
